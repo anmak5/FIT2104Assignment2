@@ -29,21 +29,29 @@ if($result){
       
     </ul>
 </nav>
-    <form method="get" action="products.php">
-        <table border="1" cellpadding="1">
+    <center><h3>Products</h3></center>
+<center><button type="button" class="button" onclick="window.location.href='addproduct.php'">Add Product</button></center><br><br>
+        
+    <form method="get" class="container" action="products.php">
+        <table border="1" cellpadding="1" class="table">
             <thead>
                 <th>ProductID</th>
                 <th>Name</th>
-                <th>Price</th>
+                <th>Cost Price</th>
+                <th>Sale Price</th>
+                <th>Country of Origin</th>
+                <th>Edit Options</th>
             </thead>
             <tbody>
             <?php while($row = $result->fetch_assoc()){ ?>
                 <tr>
                     <td><?php echo $row["product_id"]; ?></td>
                     <td><?php echo $row["product_name"]; ?></td>
-                    <td><?php echo $row["product_sale_price"]; ?></td>
-                    <td><button type="button" onclick="update(<?php echo $row["product_id"] ?>)">Update</button></td>
-                    <td><button type="button" onclick="delete(<?php echo $row["product_id"] ?>)">Delete</button></td>
+                    <td><?php echo $row["product_purchase_price"]; ?></td>
+                    <td>$<?php echo $row["product_sale_price"]; ?></td>
+			         <td><?php echo $row["product_country_of_origin"]; ?></td>
+                    <td><button type="button" onclick="update(<?php echo $row["product_id"] ?>)">Update</button> <button type="button" onclick="delete(<?php echo $row["product_id"] ?>)">Delete</button></td>
+                    
                     
                 </tr>
             <?php
@@ -54,15 +62,5 @@ if($result){
         </table>
         </form>
         <br><br><br>
-        <table border="1" cellpadding="5">
-            <tr>
-                <th>Category</th>
-            </tr>
-            <tr>
-                <td>Decoration</td>
-            <td><input type="checkbox" name="check[]" value="yes" checked="false"></td>
-                
-            </tr>
-        </table>
     </body>
 </html>
