@@ -2,10 +2,10 @@
 
 include("connection.php");
 $conn = new mysqli($host, $userName, $pass, $dbName);
-
-$query = "SELECT * FROM product p JOIN productcategory c ON p.product_id = c.product_id JOIN category q ON c.category_id = q.category_id";
+$search = "'".$_GET["search"]."'";
+$query = "SELECT * FROM product p JOIN productcategory c ON p.product_id = c.product_id JOIN category q ON c.category_id = q.category_id WHERE q.category_name LIKE ".$search;
 $result = $conn->query($query);
-;
+
 
 
 if($result){
@@ -38,7 +38,7 @@ if($result){
         <form method="get" class="container" action="productSearch.php">
             <h3><b>Search</b></h3>
             <input type="text" name="search"></input>
-            <input type="submit" value="Go!"></input>
+            <input type="submit" value="search"></input>
         </form>
         <br><br>
         

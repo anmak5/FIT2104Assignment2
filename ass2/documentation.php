@@ -27,15 +27,13 @@ if($result){
            <li><a href="productcategory.php">ProductCategory</a></li>
            <li><a href="images.php">Images</a></li>
            <li class="active"><a href="documentation.php">Documentation</a></li>
-           <li><a href="sign_in.php">Sign In</a></li>
-           <li><a href="sign_out.php">Sign Out</a></li>
+            <li><a href="project.php">Projects</a></li>
+                <li><a href="category.php">Category</a></li>
+                <li><a href="sign_in.php">Sign In</a></li>
+                <li><a href="sign_out.php">Sign Out</a></li>
       
     </ul>
 </nav>
 
     </body>
 </html>
-
-<?php
-
-

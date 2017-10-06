@@ -24,6 +24,8 @@
         <li><a href="images.php">Images</a></li>
         <li><a href="sign_in.php">Sign In</a></li>
         <li><a href="documentation.php">Documentation</a></li>
+          <li><a href="project.php">Projects</a></li>
+           <li><a href="category.php">Category</a></li>
         <li class="active"><a href="sign_out.php">Sign Out</a></li>
 
     </ul>
