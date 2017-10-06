@@ -8,8 +8,12 @@ $result = $conn->query($query);
 ;
 
 
-if($result){
+if($result) {
     $result->data_seek(0);
+}
+
+session_start();
+
     ?>
 <html>
     <head>
@@ -26,41 +30,57 @@ if($result){
            <li><a href="productcategory.php">ProductCategory</a></li>
            <li><a href="images.php">Images</a></li>
            <li><a href="documentation.php">Documentation</a></li>
+           <li><a href="sign_in.php">Sign In</a></li>
+           <li><a href="sign_out.php">Sign Out</a></li>
       
     </ul>
 </nav>
-    <center><h3>Products</h3></center>
-<center><button type="button" class="button" onclick="window.location.href='addproduct.php'">Add Product</button></center><br><br>
-        
-    <form method="get" class="container" action="products.php">
-        <table border="1" cellpadding="1" class="table">
-            <thead>
+        <?php
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+        ?>
+        <center><h3>Products</h3></center>
+        <center>
+            <button type="button" class="button" onclick="window.location.href='addproduct.php'">Add Product</button>
+        </center>
+        <br><br>
+
+        <form method="get" class="container" action="products.php">
+            <table border="1" cellpadding="1" class="table">
+                <thead>
                 <th>ProductID</th>
                 <th>Name</th>
                 <th>Cost Price</th>
                 <th>Sale Price</th>
                 <th>Country of Origin</th>
                 <th>Edit Options</th>
-            </thead>
-            <tbody>
-            <?php while($row = $result->fetch_assoc()){ ?>
-                <tr>
-                    <td><?php echo $row["product_id"]; ?></td>
-                    <td><?php echo $row["product_name"]; ?></td>
-                    <td><?php echo $row["product_purchase_price"]; ?></td>
-                    <td>$<?php echo $row["product_sale_price"]; ?></td>
-			         <td><?php echo $row["product_country_of_origin"]; ?></td>
-                    <td><button type="button" onclick="update(<?php echo $row["product_id"] ?>)">Update</button> <button type="button" onclick="delete(<?php echo $row["product_id"] ?>)">Delete</button></td>
-                    
-                    
-                </tr>
-            <?php
-            }
-    }
-?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php while ($row = $result->fetch_assoc()) { ?>
+                    <tr>
+                        <td><?php echo $row["product_id"]; ?></td>
+                        <td><?php echo $row["product_name"]; ?></td>
+                        <td><?php echo $row["product_purchase_price"]; ?></td>
+                        <td>$<?php echo $row["product_sale_price"]; ?></td>
+                        <td><?php echo $row["product_country_of_origin"]; ?></td>
+                        <td>
+                            <button type="button" onclick="update(<?php echo $row["product_id"] ?>)">Update</button>
+                            <button type="button" onclick="delete(<?php echo $row["product_id"] ?>)">Delete</button>
+                        </td>
+
+
+                    </tr>
+                    <?php
+                }
+                ?>
+                </tbody>
+            </table>
         </form>
         <br><br><br>
     </body>
 </html>
+<?php
+}
+    else{
+        echo "Please log in to view this page";
+    }
+?>
