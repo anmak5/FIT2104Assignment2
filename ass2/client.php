@@ -1,4 +1,4 @@
-<?php 
+ <?php
 
 include("connection.php");
 $conn = new mysqli($host, $userName, $pass, $dbName);
@@ -7,10 +7,11 @@ $query = "SELECT * FROM client";
 $result = $conn->query($query);
 
 
-if($result){
+if($result) {
     $result->data_seek(0);
 }
-    ?>
+ session_start();
+ ?>
     <html>
 
     <head>
@@ -19,98 +20,110 @@ if($result){
     </head>
 
     <body>
-        <nav class="navbar navbar-inverse" role="navigation" style="padding-left:130px;">
-            <ul class="nav navbar-nav">
-                <li><a href="main.php">Home</a></li>
-                <li><a href="products.php" id="results">Products</a></li>
-                <li class="active"><a href="client.php">Clients</a></li>
-                <li><a href="product_multiple.php">Multiple Edit</a></li>
-                <li><a href="productcategory.php">ProductCategory</a></li>
-                <li><a href="images.php">Images</a></li>
-                <li><a href="documentation.php">Documentation</a></li>
+    <nav class="navbar navbar-inverse" role="navigation" style="padding-left:130px;">
+        <ul class="nav navbar-nav">
+            <li><a href="main.php">Home</a></li>
+            <li><a href="products.php" id="results">Products</a></li>
+            <li class="active"><a href="client.php">Clients</a></li>
+            <li><a href="product_multiple.php">Multiple Edit</a></li>
+            <li><a href="productcategory.php">ProductCategory</a></li>
+            <li><a href="images.php">Images</a></li>
+            <li><a href="documentation.php">Documentation</a></li>
+            <li><a href="sign_in.php">Sign In</a></li>
+            <li><a href="sign_out.php">Sign Out</a></li>
 
-            </ul>
-        </nav>
-        <html>
+        </ul>
+    </nav>
+    <html>
+ <?php
+    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+    ?>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
 
-        <head>
-            <meta charset="UTF-8">
-            <title></title>
-        </head>
+    <body>
 
-        <body>
+    <center>
+        <h3>Clients</h3></center>
+    <center>
+        <button type="button" class="button" onclick="window.location.href='addclient.php'">Add Client</button>
+    </center>
+    <br>
+    <br>
+    <table border="1" class="table">
 
-            <center>
-                <h3>Clients</h3></center>
-            <center>
-                <button type="button" class="button" onclick="window.location.href='addclient.php'">Add Client</button>
-            </center>
-            <br>
-            <br>
-                <table border="1" class="table">
+        <tr>
+            <thead>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Street Address</th>
+            <th>Suburb</th>
+            <th>State</th>
+            <th>Post Code</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Mailing List</th>
+            <th>Edit Options</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php while ($row = mysqli_fetch_array($result)) {
+                ?>
 
-                    <tr>
-                        <thead>
-                            <th>ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Street Address</th>
-                            <th>Suburb</th>
-                            <th>State</th>
-                            <th>Post Code</th>
-                            <th>Email</th>
-                            <th>Mobile</th>
-                            <th>Mailing List</th>
-                            <th>Edit Options</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_array($result))
-			{
-		?>
+                <tr>
+                    <td>
+                        <?php echo $row["client_id"]; ?>
+                    </td>
+                    <td>
+                        <?php echo $row["client_fname"]; ?>
+                    </td>
+                    <td>
+                        <?php echo $row["client_gname"]; ?>
+                    </td>
+                    <td>
+                        <?php echo $row["client_street"]; ?>
+                    </td>
+                    <td>
+                        <?php echo $row["client_suburb"]; ?>
+                    </td>
+                    <td>
+                        <?php echo $row["client_state"]; ?>
+                    </td>
+                    <td>
+                        <?php echo $row["client_pc"]; ?>
+                    </td>
+                    <td>
+                        <?php echo $row["client_email"]; ?>
+                    </td>
+                    <td>
+                        <?php echo $row["client_mobile"]; ?>
+                    </td>
+                    <td>
+                        <?php echo $row["client_mailinglist"]; ?>
+                    </td>
+                    <td>
+                        <a href="clientModify.php?client_id=<?php echo $row["client_id"]; ?>&Action=Update">Update</a>
+                        <a
+                                href="clientModify.php?client_id=<?php echo $row["client_id"]; ?>&Action=Delete">Delete</a>
+                    </td>
+                    </td>
 
-                            <tr>
-                                <td>
-                                    <?php echo $row["client_id"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["client_fname"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["client_gname"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["client_street"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["client_suburb"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["client_state"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["client_pc"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["client_email"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["client_mobile"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["client_mailinglist"]; ?>
-                                </td>
-                                <td>
-                                    <a href="clientModify.php?client_id=<?php echo $row["client_id"]; ?>&Action=Update">Update</a> <a  href="clientModify.php?client_id=<?php echo $row["client_id"];?>&Action=Delete">Delete</a></td>
-                                </td>
+                </tr>
 
-                            </tr>
+                <?php
+            }
+            ?>
+            </tbody>
+    </table>
+    </body>
 
-                            <?php
-			}
-		?>
-                    </tbody>
-                </table>
-        </body>
-
-        </html>
+    </html>
+        <?php
+    }
+    else{
+     echo "Please login to view this page";
+    }
+    ?>
